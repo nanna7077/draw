@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#toolbar {
+    position: fixed;
+    bottom: 0;
+    width: 99vw;
+    display: flex;
+    overflow-x: scroll;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-top: 1px solid #ccc;
+    gap: 10px;
+    z-index: 10;
+}
+
+#toolbar input[type="color"] {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#toolbar .subtoolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#toolbar .color {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 100%;
+    outline: none;
+    cursor: pointer;
+}
+
+#customColor, #appColor {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+}
+
+#toolbar input[type="range"] {
+    width: 100px;
+}
+
+#toolbar button {
+    cursor: pointer;
+    border-radius: 100%;
+    border: 1px solid #ccc;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#eraser {
+    background-color: white;
+}
+
+#canvasContainer {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: 1;
+}
+
+.page {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 60px);
+}
+
+canvas {
+    border: 1px solid #ccc;
+}
+
+.deletePage {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 1px solid rgb(255, 0, 0);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.aiStatus {
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+.aiStatus svg {
+    max-width: 30px;
+    max-height: 30px;
+}
