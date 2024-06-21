@@ -7,6 +7,7 @@ let x = 0;
 let y = 0;
 let isErasing = false;
 let trace = [];
+let typed = [];
 let currentStroke = [];
 let currentPageIndex = 0;
 let idleTimeout;
@@ -75,6 +76,43 @@ canvasContainer.addEventListener('scrollend', () => {
     currentPageIndex = Math.max(0, Math.min(canvasContainer.children.length - 1, Math.floor(canvasContainer.scrollLeft / canvasContainer.children[0].offsetWidth)));
 });
 
+window.addEventListener('keydown', (e) => {
+    const ctx = canvasContainer.children[currentPageIndex].querySelector('canvas').getContext('2d');
+    ctx.font = `${currentThickness * 10}px cursive`;
+    ctx.fillStyle = currentColor;
+
+    if (e.key.length === 1) {
+        ctx.fillText(e.key, x, y);
+        typed.push(e.key);
+        x += ctx.measureText(e.key).width + 2;
+
+        if (x > ctx.canvas.width - 10) {
+            x = 10;
+            y += currentThickness * 15;
+        }
+    } else if (e.key === 'Backspace') {
+        handleBackspace(ctx);
+    }
+    resetIdleTimer();
+});
+
+function handleBackspace(ctx) {
+    const textWidth = ctx.measureText(' ').width;
+    const canvasData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    if (x <= 10 && y > 60) {
+        y -= currentThickness * 15;
+        x = ctx.canvas.width - 10; 
+    } else if (x > 10) {
+        x -= textWidth;
+    }
+    typed.pop();
+    
+    ctx.putImageData(canvasData, 0, 0);
+    ctx.clearRect(x, y - currentThickness * 10, textWidth, currentThickness * 15);
+
+}
+
 function createNewCanvasPage(width = window.innerWidth, height = window.innerHeight - document.getElementById('toolbar').offsetHeight) {
     const page = document.createElement('div');
     page.className = 'page';
@@ -111,15 +149,15 @@ function createNewCanvasPage(width = window.innerWidth, height = window.innerHei
         isDrawing = true;
         x = e.offsetX;
         y = e.offsetY;
-        currentStroke = [[], []]; // Initialize new stroke
-        resetIdleTimer(); // Reset idle timer on activity
+        currentStroke = [[], []];
+        resetIdleTimer();
     });
 
     canvas.addEventListener('mouseup', () => {
         isDrawing = false;
         if (currentStroke[0].length > 0 && currentStroke[1].length > 0) {
-            trace.push(currentStroke); // Save completed stroke
-            resetIdleTimer(); // Reset idle timer on activity
+            trace.push(currentStroke);
+            resetIdleTimer();
         }
         saveToLocalStorage();
     });
@@ -131,11 +169,11 @@ function createNewCanvasPage(width = window.innerWidth, height = window.innerHei
             } else {
                 drawLine(ctx, x, y, e.offsetX, e.offsetY);
                 currentStroke[0].push(e.offsetX);
-                currentStroke[1].push(e.offsetY); // Capture coordinates
+                currentStroke[1].push(e.offsetY);
             }
             x = e.offsetX;
             y = e.offsetY;
-            resetIdleTimer(); // Reset idle timer on activity
+            resetIdleTimer();
         }
     });
 
@@ -145,15 +183,15 @@ function createNewCanvasPage(width = window.innerWidth, height = window.innerHei
         const rect = canvas.getBoundingClientRect();
         x = e.touches[0].clientX - rect.left;
         y = e.touches[0].clientY - rect.top;
-        currentStroke = [[], []]; // Initialize new stroke
-        resetIdleTimer(); // Reset idle timer on activity
+        currentStroke = [[], []];
+        resetIdleTimer();
     });
 
     canvas.addEventListener('touchend', () => {
         isDrawing = false;
         if (currentStroke[0].length > 0 && currentStroke[1].length > 0) {
-            trace.push(currentStroke); // Save completed stroke
-            resetIdleTimer(); // Reset idle timer on activity
+            trace.push(currentStroke);
+            resetIdleTimer();
         }
         saveToLocalStorage();
     });
@@ -169,11 +207,11 @@ function createNewCanvasPage(width = window.innerWidth, height = window.innerHei
             } else {
                 drawLine(ctx, x, y, newX, newY);
                 currentStroke[0].push(newX);
-                currentStroke[1].push(newY); // Capture coordinates
+                currentStroke[1].push(newY);
             }
             x = newX;
             y = newY;
-            resetIdleTimer(); // Reset idle timer on activity
+            resetIdleTimer();
         }
     });
 }
@@ -284,37 +322,44 @@ function loadDocument(event) {
     reader.readAsText(file);
 }
 
+function detect(text, renderfsize = 48) {
+    function renderAnswer(value, renderfsize) {
+        const ctx = canvasContainer.children[currentPageIndex].querySelector('canvas').getContext('2d');
+        ctx.font = `${renderfsize}px cursive`;
+        ctx.fillStyle = currentColor;
+        ctx.fillText(value, x + 10, y);
+    }
+
+    try {
+        const convres = convertUnits(text);
+        if (convres) {
+            renderAnswer(convres, renderfsize);
+            return;
+        }
+    } catch (error) {
+        // do nothing
+    }
+
+    try {
+        const mathres = evaluateEquation(text);
+        if (mathres) {
+            renderAnswer(mathres, renderfsize);
+            return;
+        }
+    } catch (error) {
+        // do nothing
+    }
+}
+
 function recognizeHandwriting() {
     if (trace.length === 0) return;
 
-    // Assume handwriting.recognize() is an async function that provides results and error
     handwriting.recognize(trace, { language: 'en' }, (results, err) => {
         if (err) {
             console.error('Handwriting recognition error:', err);
         } else {
-            console.log('Recognized text:', results);
-
-            // Function to render the recognized answer on canvas
-            function renderAnswer(value) {
-                const ctx = canvasContainer.children[currentPageIndex].querySelector('canvas').getContext('2d');
-                ctx.font = '48px cursive';
-                ctx.fillStyle = currentColor;
-                ctx.fillText(value, x + 10, y);
-            }
-
             try {
-                const convres = convertUnits(results[0]);
-                if (convres) {
-                    renderAnswer(convres);
-                    return;
-                }
-
-                const mathres = evaluateEquation(results[0]);
-                if (mathres) {
-                    renderAnswer(mathres);
-                    return;
-                }
-
+                detect(results[0]);
             } catch (error) {
                 console.error(error);
            }
@@ -328,6 +373,10 @@ function resetIdleTimer() {
     idleTimeout = setTimeout(() => {
         if (trace.length > 0) {
             recognizeHandwriting();
+        }
+        if (typed.length > 0) {
+            detect(typed.join('').trim(), currentThickness * 10);
+            typed = [];
         }
     }, 2000);
 }

@@ -45,7 +45,9 @@ function evaluateEquation(input) {
 
 function convertUnits(input) {
     try {
-        input = input.toLowerCase().trim().replace(/\s+/g, ' ');
+        console.log(input);
+        input = input.toLowerCase().replace(/\s+/g, ' ').replace("=", "").trim();
+        console.log(input);
         const regex = /^(\d+(\.\d+)?)\s*(\w+)\s*to\s*(\w+)$/;
         const match = input.match(regex);
         if (!match) {

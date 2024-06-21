@@ -13,3 +13,4 @@ Try at [https://draw.nannan.in](https://draw.nannan.in)
 - [ ] Use context from previous equations.
 - [ ] Undo and Redo.
 - [ ] Save content as .txt file.
+- [x] Add typing support.
