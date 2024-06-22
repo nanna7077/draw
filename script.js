@@ -384,19 +384,16 @@ function resetIdleTimer() {
 createNewCanvasPage();
 loadFromLocalStorage();
 
-var modal = document.getElementById("centralModal");
-var closeModalBtn = document.getElementsByClassName("close")[0];
+document.getElementById('modalInfoButton').addEventListener('click', () => {
+    document.getElementById("centralModal").style.display = "block";
+});
 
-function openModal() {
-    modal.style.display = "block";
-}
-
-closeModalBtn.onclick = function () {
-    modal.style.display = "none";
+document.getElementsByClassName("close")[0].onclick = function () {
+    document.getElementById("centralModal").style.display = "none";
 };
 
 window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == document.getElementById("centralModal")) {
+        document.getElementById("centralModal").style.display = "none";
     }
 };
