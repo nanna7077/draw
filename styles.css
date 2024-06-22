@@ -4,17 +4,19 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
 
 #toolbar {
     position: fixed;
-    bottom: 0;
-    width: 99vw;
+    bottom: 4px;
+    width: 98vw;
     display: flex;
     overflow-x: scroll;
     justify-content: space-between;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
     border-top: 1px solid #ccc;
     gap: 10px;
     z-index: 10;
@@ -84,7 +86,7 @@ body {
 }
 
 canvas {
-    border: 1px solid #ccc;
+    border: 1px solid rgba(255, 255, 255 ,0.3);
 }
 
 .deletePage {
@@ -112,4 +114,49 @@ canvas {
 .aiStatus svg {
     max-width: 30px;
     max-height: 30px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.modal-content {
+    backdrop-filter: blur(5px);
+    background-color: rgba(255,255,255,0.2);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: fit-content;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    animation: modalOpen 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes modalOpen {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

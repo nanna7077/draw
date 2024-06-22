@@ -1,55 +1,70 @@
-<!-- Version ?v=0.0.1 ; Search all and replace version to cache bust-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Draw</title>
-    <link rel="stylesheet" href="styles.css?v=0.0.1">
-    
+    <link rel="stylesheet" href="styles.css?v=0.0.2">
 </head>
 <body>
-    <div id="toolbar">
-        <div class="subtoolbar">
-            <button class="color" style="background-color: black;"></button>
-            <button class="color" style="background-color: red;"></button>
-            <button class="color" style="background-color: green;"></button>
-            <button class="color" style="background-color: blue;"></button>
-            <input type="color" id="customColor" title="Pick Color">
-            <input type="range" id="thickness" min="1" max="10" value="2" title="Line Thickness">
-            <button id="eraser">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.4096 5.50506C13.0796 3.83502 13.9146 3 14.9522 3C15.9899 3 16.8249 3.83502 18.4949 5.50506C20.165 7.1751 21 8.01013 21 9.04776C21 10.0854 20.165 10.9204 18.4949 12.5904L14.3017 16.7837L7.21634 9.69828L11.4096 5.50506Z" fill="#1C274C"></path> <path d="M6.1557 10.759L13.2411 17.8443L12.5904 18.4949C12.2127 18.8727 11.8777 19.2077 11.5734 19.5H21C21.4142 19.5 21.75 19.8358 21.75 20.25C21.75 20.6642 21.4142 21 21 21H9C7.98423 20.9747 7.1494 20.1393 5.50506 18.4949C3.83502 16.8249 3 15.9899 3 14.9522C3 13.9146 3.83502 13.0796 5.50506 11.4096L6.1557 10.759Z" fill="#1C274C"></path> </g></svg>
-            </button>
-            <button id="newPage">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            </button>
-            <button id="prevPage">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
-            </button>
-            <button id="nextPage">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-            </button>
-            <button onclick="saveDocument()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            </button>
-            <button onclick="loadDocument()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
-            </button>
-        </div>
-        <div class="subtoolbar">
-            <input type="color" id="appColor" title="App Color">
-            <!-- <div id="aiStatus-loading" title="Loading Answers" class="aiStatus">
-                <svg fill="#000000" height="200px" width="200px" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M16,1c-0.6,0-1,0.4-1,1v5c0,0.6,0.4,1,1,1s1-0.4,1-1V2C17,1.4,16.6,1,16,1z"></path> <path d="M11.6,2.7c-0.2-0.5-0.8-0.8-1.3-0.5C9.7,2.4,9.5,2.9,9.7,3.4l1.9,4.6c0.2,0.4,0.5,0.6,0.9,0.6c0.1,0,0.3,0,0.4-0.1 c0.5-0.2,0.8-0.8,0.5-1.3L11.6,2.7z"></path> <path d="M8.9,10.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4L6.8,5.4C6.4,5,5.8,5,5.4,5.4s-0.4,1,0,1.4 L8.9,10.3z"></path> <path d="M2.7,11.6l4.6,1.9c0.1,0.1,0.3,0.1,0.4,0.1c0.4,0,0.8-0.2,0.9-0.6c0.2-0.5,0-1.1-0.5-1.3L3.4,9.7c-0.5-0.2-1.1,0-1.3,0.5 C1.9,10.8,2.2,11.4,2.7,11.6z"></path> <path d="M8,16c0-0.6-0.4-1-1-1H2c-0.6,0-1,0.4-1,1s0.4,1,1,1h5C7.6,17,8,16.6,8,16z"></path> <path d="M8.6,19.1c-0.2-0.5-0.8-0.8-1.3-0.5l-4.6,1.9c-0.5,0.2-0.8,0.8-0.5,1.3c0.2,0.4,0.5,0.6,0.9,0.6c0.1,0,0.3,0,0.4-0.1 l4.6-1.9C8.6,20.2,8.8,19.6,8.6,19.1z"></path> <path d="M10.3,21.7c-0.4-0.4-1-0.4-1.4,0l-3.5,3.5c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3l3.5-3.5 C10.7,22.7,10.7,22,10.3,21.7z"></path> <path d="M12.9,23.4c-0.5-0.2-1.1,0-1.3,0.5l-1.9,4.6c-0.2,0.5,0,1.1,0.5,1.3c0.1,0.1,0.3,0.1,0.4,0.1c0.4,0,0.8-0.2,0.9-0.6 l1.9-4.6C13.7,24.2,13.4,23.6,12.9,23.4z"></path> <path d="M16,24c-0.6,0-1,0.4-1,1v5c0,0.6,0.4,1,1,1s1-0.4,1-1v-5C17,24.4,16.6,24,16,24z"></path> <path d="M20.4,23.9c-0.2-0.5-0.8-0.8-1.3-0.5c-0.5,0.2-0.8,0.8-0.5,1.3l1.9,4.6c0.2,0.4,0.5,0.6,0.9,0.6c0.1,0,0.3,0,0.4-0.1 c0.5-0.2,0.8-0.8,0.5-1.3L20.4,23.9z"></path> <path d="M23.1,21.7c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l3.5,3.5c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4 L23.1,21.7z"></path> <path d="M29.3,20.4l-4.6-1.9c-0.5-0.2-1.1,0-1.3,0.5c-0.2,0.5,0,1.1,0.5,1.3l4.6,1.9c0.1,0.1,0.3,0.1,0.4,0.1 c0.4,0,0.8-0.2,0.9-0.6C30.1,21.2,29.8,20.6,29.3,20.4z"></path> <path d="M30,15h-5c-0.6,0-1,0.4-1,1s0.4,1,1,1h5c0.6,0,1-0.4,1-1S30.6,15,30,15z"></path> <path d="M23.4,12.9c0.2,0.4,0.5,0.6,0.9,0.6c0.1,0,0.3,0,0.4-0.1l4.6-1.9c0.5-0.2,0.8-0.8,0.5-1.3c-0.2-0.5-0.8-0.8-1.3-0.5 l-4.6,1.9C23.4,11.8,23.2,12.4,23.4,12.9z"></path> <path d="M21.7,10.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3l3.5-3.5c0.4-0.4,0.4-1,0-1.4s-1-0.4-1.4,0l-3.5,3.5 C21.3,9.3,21.3,10,21.7,10.3z"></path> <path d="M19.1,8.6c0.1,0.1,0.3,0.1,0.4,0.1c0.4,0,0.8-0.2,0.9-0.6l1.9-4.6c0.2-0.5,0-1.1-0.5-1.3c-0.5-0.2-1.1,0-1.3,0.5l-1.9,4.6 C18.3,7.8,18.6,8.4,19.1,8.6z"></path> </g> </g></svg>
+    <div style="display: flex; justify-content: center;">
+        <div id="toolbar">
+            <div class="subtoolbar">
+                <button class="color" style="background-color: black;"></button>
+                <button class="color" style="background-color: red;"></button>
+                <button class="color" style="background-color: green;"></button>
+                <button class="color" style="background-color: blue;"></button>
+                <input type="color" id="customColor" title="Pick Color">
+                <input type="range" id="thickness" min="1" max="10" value="2" title="Line Thickness">
+                <button id="eraser">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.4096 5.50506C13.0796 3.83502 13.9146 3 14.9522 3C15.9899 3 16.8249 3.83502 18.4949 5.50506C20.165 7.1751 21 8.01013 21 9.04776C21 10.0854 20.165 10.9204 18.4949 12.5904L14.3017 16.7837L7.21634 9.69828L11.4096 5.50506Z" fill="#1C274C"></path> <path d="M6.1557 10.759L13.2411 17.8443L12.5904 18.4949C12.2127 18.8727 11.8777 19.2077 11.5734 19.5H21C21.4142 19.5 21.75 19.8358 21.75 20.25C21.75 20.6642 21.4142 21 21 21H9C7.98423 20.9747 7.1494 20.1393 5.50506 18.4949C3.83502 16.8249 3 15.9899 3 14.9522C3 13.9146 3.83502 13.0796 5.50506 11.4096L6.1557 10.759Z" fill="#1C274C"></path> </g></svg>
+                </button>
+                <button id="newPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                </button>
+                <button id="prevPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+                </button>
+                <button id="nextPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                </button>
+                <button onclick="saveDocument()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                </button>
+                <button onclick="loadDocument()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+                </button>
             </div>
-            <div id="aiStatus-error" title="Error Loading AI" class="aiStatus" style="display: none">
-                <svg viewBox="0 0 24 24" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="none" d="M0 0h24v24H0z"></path> <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"></path> </g> </g></svg>
+            <div class="subtoolbar">
+                <input type="color" id="appColor" title="App Color">
+                <button onclick="openModal()">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 17V11" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#1C274C"></circle> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                </button>
+                <!-- <div id="aiStatus-loading" title="Loading Answers" class="aiStatus">
+                    <svg fill="#000000" height="200px" width="200px" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M16,1c-0.6,0-1,0.4-1,1v5c0,0.6,0.4,1,1,1s1-0.4,1-1V2C17,1.4,16.6,1,16,1z"></path> <path d="M11.6,2.7c-0.2-0.5-0.8-0.8-1.3-0.5C9.7,2.4,9.5,2.9,9.7,3.4l1.9,4.6c0.2,0.4,0.5,0.6,0.9,0.6c0.1,0,0.3,0,0.4-0.1 c0.5-0.2,0.8-0.8,0.5-1.3L11.6,2.7z"></path> <path d="M8.9,10.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4L6.3,5c-0.4-0.4-1-0.4-1.4,0 c-0.4,0.4-0.4,1,0,1.4L8.9,10.3z"></path> <path d="M6.3,15H2c-0.6,0-1,0.4-1,1s0.4,1,1,1h4.3c0.6,0,1-0.4,1-1S6.9,15,6.3,15z"></path> <path d="M8.1,19.7L6.2,24c-0.2,0.5,0,1.1,0.5,1.3c0.1,0,0.3,0.1,0.4,0.1c0.4,0,0.7-0.2,0.9-0.6l1.9-4.3c0.2-0.5,0-1.1-0.5-1.3 C8.9,19,8.3,19.2,8.1,19.7z"></path> <path d="M8.1,13.6c-0.4-0.4-1-0.4-1.4,0l-3,3c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3l3-3 C8.5,14.6,8.5,14,8.1,13.6z"></path> <path d="M21.4,10.3l3.7-3.7c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-3.7,3.7c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3 S21.2,10.6,21.4,10.3z"></path> <path d="M30,15h-4.3c-0.6,0-1,0.4-1,1s0.4,1,1,1H30c0.6,0,1-0.4,1-1S30.6,15,30,15z"></path> <path d="M22.5,21.4l-1.9,4.3c-0.2,0.5,0,1.1,0.5,1.3c0.1,0,0.3,0.1,0.4,0.1c0.4,0,0.7-0.2,0.9-0.6l1.9-4.3c0.2-0.5,0-1.1-0.5-1.3 C23.3,20.7,22.7,20.9,22.5,21.4z"></path> <path d="M22.5,19.7c0.2-0.5,0-1.1-0.5-1.3c-0.5-0.2-1.1,0-1.3,0.5l-3.4,3.4c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3 s0.5-0.1,0.7-0.3L22.5,19.7z"></path> <path d="M18.5,5.6c0.1,0,0.3,0,0.4-0.1c0.5-0.2,0.8-0.8,0.5-1.3L17.5,1.2c-0.2-0.5-0.8-0.8-1.3-0.5c-0.5,0.2-0.8,0.8-0.5,1.3 l1.9,4.3C17.8,5.4,18.1,5.6,18.5,5.6z"></path> </g> </g></svg>
+                </div>
+                <div id="aiStatus-checked" title="AI Check Done" class="aiStatus">
+                    <svg fill="#000000" height="200px" width="200px" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M16,0.9C7.3,0.9,0.2,8,0.2,16.7c0,8.7,7.1,15.8,15.8,15.8S31.8,25.4,31.8,16.7C31.8,8,24.7,0.9,16,0.9z M13.8,24.6L5.9,16.7 l2.4-2.4l5.5,5.5l11.9-11.9l2.4,2.4L13.8,24.6z"></path> </g> </g></svg>
+                </div> -->
             </div>
-            <div id="aiStatus-success" title="AI Ready" class="aiStatus" style="display: none;">
-                <svg viewBox="0 0 512 512" height="30px" width="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>success</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="add-copy" fill="#000000" transform="translate(42.666667, 42.666667)"> <path d="M213.333333,3.55271368e-14 C95.51296,3.55271368e-14 3.55271368e-14,95.51296 3.55271368e-14,213.333333 C3.55271368e-14,331.153707 95.51296,426.666667 213.333333,426.666667 C331.153707,426.666667 426.666667,331.153707 426.666667,213.333333 C426.666667,95.51296 331.153707,3.55271368e-14 213.333333,3.55271368e-14 Z M213.333333,384 C119.227947,384 42.6666667,307.43872 42.6666667,213.333333 C42.6666667,119.227947 119.227947,42.6666667 213.333333,42.6666667 C307.43872,42.6666667 384,119.227947 384,213.333333 C384,307.43872 307.438933,384 213.333333,384 Z M293.669333,137.114453 L323.835947,167.281067 L192,299.66912 L112.916693,220.585813 L143.083307,190.4192 L192,239.335893 L293.669333,137.114453 Z" id="Shape"> </path> </g> </g> </g></svg>
-            </div> -->
         </div>
     </div>
+    
     <div id="canvasContainer"></div>
+    
+    <div id="centralModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div style="display: flex; width: fit-content; height: 40vh;">
+                <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                    <img src="static/icon.png" style="height: 20vh;" />
+                    <div style="display: flex; gap: 4px; font-size: 1.3rem; font-weight: bold; font-family: cursive;">Draw</div>
+                    <div style="display: flex; gap: 4px; font-size: .8rem;">Made by <a href="https://nannan.in">Nannan</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- <script src="textprocess.js" type="module"></script> -->
     <script src="equation.js?v=0.0.1" cache="false"></script>
     <script src="handwriting.js?v=0.0.1"></script>
